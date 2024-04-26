@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Purchase Details{% endblock %}
+
+{% block content %}
+    <h1>Service Purchase Details</h1>
+    <p>Service Type: {{ service_purchase.service_type }}</p>
+    <p>Purchase Date: {{ service_purchase.purchase_date}}</p>
+{% endblock %}

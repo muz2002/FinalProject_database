@@ -1,21 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Account Details</title>
-  </head>
-  <body>
-    <h1>Account Number: {{ account.account_number }}</h1>
-    <p>Customer: {{ account.customer.name }}</p>
-    <p>IFSC Code: {{ account.ifsc_code }}</p>
-    <p>Balance: {{ account.balance }}</p>
+    <link rel="stylesheet" href="{% static 'css/account_styles.css' %}">
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="account-heading">Account Details</h1>
+        <div class="account-info">
+            <h2>Account Number: {{ account.account_number }}</h2>
+            <p>Customer: {{ account.customer.name }}</p>
+            <p>IFSC Code: {{ account.ifsc_code }}</p>
+            <p>Balance: {{ account.balance }}</p>
+        </div>
 
-    <h2>Transactions</h2>
-    <ul>
-      {% for transaction in transactions %}
-      <li>
-        {{ transaction.transaction_date }} - {{ transaction.amount }} {{transaction.transaction_status }} with {{ transaction.party_involved }}
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+        <h2 class="transaction-heading">Transactions</h2>
+        <ul class="transaction-list">
+            {% for transaction in transactions %}
+            <li>
+                <span class="transaction-date">{{ transaction.transaction_date }}</span>
+                <span class="transaction-amount">{{ transaction.amount }}</span>
+                <span class="transaction-status">{{ transaction.transaction_status }}</span>
+                <span class="transaction-party">{{ transaction.party_involved }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
 </html>

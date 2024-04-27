@@ -62,7 +62,6 @@ class Customer(models.Model):
         managed = False
         db_table = "customer"
 
-
 class Customerservicepurchase(models.Model):
     purchase_id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, models.DO_NOTHING, blank=True, null=True)

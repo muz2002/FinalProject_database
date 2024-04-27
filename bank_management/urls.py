@@ -16,17 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from bank_app.views import *
+from django.urls import path, include
+from bank_app import urls as bank_url
+from user_authentication import urls as user_auth
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("customer/<int:customer_id>/", customer_detail, name="customer_detail"),
-    path("account/<int:account_id>/", account_detail, name="account_detail"),
-    path('card/<int:card_id>/', card_detail, name='card_detail'),
-    path('transaction/<int:transaction_id>/', transaction_detail, name='transaction_detail'),
-    path('loan/<int:loan_id>/', loan_detail, name='loan_detail'),
-    path('service/<int:purchase_id>/', service_purchase_detail, name='service_purchase_detail'),
-]
-
+    path("", include(bank_url)),
+    path("auth/",include(user_auth)),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

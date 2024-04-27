@@ -6,8 +6,13 @@ from django.shortcuts import render, get_object_or_404, HttpResponse
 from .models import Customer, Account, Card, Transaction, Loan, Customerservicepurchase
 
 
-def customer_detail(request, customer_id):
-    customer = get_object_or_404(Customer, pk=customer_id)
+def home(request):
+    return render(request, "base.html")
+
+
+def customer_detail(request):
+
+    customer = get_object_or_404(Customer, pk=request.user.account.customer_id)
     accounts = Account.objects.filter(customer=customer)
     cards = Card.objects.filter(customer=customer)
     loans = Loan.objects.filter(customer=customer)
@@ -25,8 +30,8 @@ def customer_detail(request, customer_id):
     )
 
 
-def account_detail(request, account_id):
-    account = get_object_or_404(Account, pk=account_id)
+def account_detail(request):
+    account = get_object_or_404(Account, pk=request.user.account.customer_id)
     transactions = Transaction.objects.filter(account=account)
     return render(
         request,

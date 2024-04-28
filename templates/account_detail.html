@@ -1,7 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Details</title>
     <link rel="stylesheet" href="{% static 'css/account_styles.css' %}">
     <!-- Include Bootstrap CSS -->
@@ -14,20 +16,39 @@
             <h2>Account Number: {{ account.account_number }}</h2>
             <p>Customer: {{ account.customer.name }}</p>
             <p>IFSC Code: {{ account.ifsc_code }}</p>
-            <p>Balance: {{ account.balance }}</p>
+            <p>Balance: ${{ account.balance }}</p>
         </div>
 
+        <!-- Transaction form -->
+        <h2 class="transaction-heading">Perform Transaction</h2>
+        <form method="POST" action="{% url 'process_transaction' %}">
+            {% csrf_token %}
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required>
+            <button type="submit">Submit</button>
+        </form>
+
         <h2 class="transaction-heading">Transactions</h2>
-        <ul class="transaction-list">
-            {% for transaction in transactions %}
-            <li>
-                <span class="transaction-date">{{ transaction.transaction_date }}</span>
-                <span class="transaction-amount">{{ transaction.amount }}</span>
-                <span class="transaction-status">{{ transaction.transaction_status }}</span>
-                <span class="transaction-party">{{ transaction.party_involved }}</span>
-            </li>
-            {% endfor %}
-        </ul>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Party Involved</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.transaction_date }}</td>
+                    <td>${{ transaction.amount }}</td>
+                    <td>{{ transaction.transaction_status }}</td>
+                    <td>{{ transaction.party_involved }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

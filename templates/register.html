@@ -1,15 +1,19 @@
 <!-- register.html -->
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/united/bootstrap.min.css">
     <title>User Registration</title>
 </head>
 <body>
+<div class="container" style="width: 500px;"> 
     <h1>User Registration</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy}}
         <button type="submit">Register</button>
     </form>
+</div>
 </body>
 </html>

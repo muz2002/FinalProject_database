@@ -1,45 +1,60 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Customer Details</title>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ customer.name }} Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
     <h1>{{ customer.name }} Details</h1>
     <p>Email: {{ customer.email }}</p>
     <p>Phone Number: {{ customer.phone_number }}</p>
 
     <h2>Accounts</h2>
     <ul>
-      {% for account in accounts %}
-      <li>
-        Account Number: {{ account.account_number }}, Balance: {{account.balance }}
-      </li>
-      {% endfor %}
+        {% for account in accounts %}
+        <li>Account Number: {{ account.account_number }}, Balance: ${{ account.balance }}</li>
+        {% endfor %}
     </ul>
 
     <h2>Cards</h2>
     <ul>
-      {% for card in cards %}
-      <li>
-        Card Type: {{ card.card_type }}, Card Number: {{ card.card_number }}
-      </li>
-      {% endfor %}
+        {% for card in cards %}
+        <li>Card Type: {{ card.card_type }}, Card Number: {{ card.card_number }}</li>
+        {% endfor %}
     </ul>
 
     <h2>Loans</h2>
     <ul>
-      {% for loan in loans %}
-      <li>Loan Type: {{ loan.loan_type }}, Amount: {{ loan.amount }}</li>
-      {% endfor %}
+        {% for loan in loans %}
+        <li>Loan Type: {{ loan.loan_type }}, Amount: ${{ loan.amount }}</li>
+        {% endfor %}
     </ul>
 
     <h2>Services</h2>
     <ul>
-      {% for service in services %}
-      <li>
-        Service Type: {{ service.service_type }}, Purchase Date: {{service.purchase_date }}
-      </li>
-      {% endfor %}
+        {% for service in services %}
+        <li>Service Type: {{ service.service_type }}, Purchase Date: {{ service.purchase_date }}</li>
+        {% endfor %}
     </ul>
-  </body>
+</body>
 </html>

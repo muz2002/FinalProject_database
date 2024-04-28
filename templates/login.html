@@ -1,15 +1,18 @@
-<!-- login.html -->
+{%load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://bootswatch.com/5/united/bootstrap.min.css">
     <title>User Login</title>
 </head>
 <body>
+<div class="container" style="width: 500px;">    
     <h1>User Login</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Login</button>
     </form>
+</div>
 </body>
 </html>

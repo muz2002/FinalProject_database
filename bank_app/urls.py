@@ -12,5 +12,4 @@ urlpatterns = [
     path("home/",home,name="home"),
     path('transfer/', transfer_funds, name='transfer_funds'),
     path('success/',  transaction_success, name='transaction_success'),
-
 ]

@@ -2,16 +2,18 @@ from django.shortcuts import render,redirect
 
 # Create your views here.
 # views.py
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from .models import Customer, Account, Card, Transaction, Loan, Customerservicepurchase
 from django.db import transaction
-from decimal import Decimal
+from . forms import TransferForm 
 
-from django.contrib import messages
+
 
 def home(request):
     return render(request, "home.html")
 
+def transaction_success(request):
+    return render(request, 'transaction_success.html')
 
 def customer_detail(request):
 
@@ -63,50 +65,43 @@ def service_purchase_detail(request, purchase_id):
     return render(
         request, "service_purchase_detail.html", {"service_purchase": service_purchase}
     )
-@transaction.atomic
-def perform_transaction(request):
-    # Get the accounts involved in the transaction
-    source_account_id = request.POST.get('source_account_id')
-    target_account_id = request.POST.get('target_account_id')
-    amount = request.POST.get('amount')
-
-    # Fetch source and target accounts from the database
-    source_account = get_object_or_404(Account, pk=source_account_id)
-    target_account = get_object_or_404(Account, pk=target_account_id)
-
-    try:
-        # Perform the transaction operations
-        source_account.balance -= Decimal(amount)
-        target_account.balance += Decimal(amount)
-        source_account.save()
-        target_account.save()
-
-        # Create a transaction record
-        Transaction.objects.create(
-            account=source_account,
-            transaction_mode='Transfer',
-            party_involved=f'Transfer to Account {target_account_id}',
-            amount=Decimal(amount),
-            transaction_status='Completed',
-        )
-
-        # Optionally, you can do additional operations or handle exceptions here
-
-        return render(request, 'transaction_success.html')
-    except Exception as e:
-        # Handle exceptions, rollback if needed
-        transaction.set_rollback(True)
-        return render(request, 'transaction_failed.html')
-
-
-
-
-def process_transaction(request):
+def transfer_funds(request):
     if request.method == 'POST':
-        # Process transaction logic here
-        amount = request.POST.get('amount')
-        # Update account balances, create transaction records, etc.
-        messages.success(request, 'Transaction processed successfully!')
-        return render(request, 'process_transaction.html')
-
-    return redirect('account_detail')
+        form = TransferForm(request.POST)
+        if form.is_valid():
+            from_account_number = form.cleaned_data['from_account_number']
+            to_account_number = form.cleaned_data['to_account_number']
+            amount = form.cleaned_data['amount']
+            
+            try:
+                with transaction.atomic():
+                    from_account = Account.objects.get(account_number=from_account_number)
+                    to_account = Account.objects.get(account_number=to_account_number)
+                    
+                    if from_account.balance < amount:
+                        raise ValueError("Insufficient funds")
+                    
+                    from_account.balance -= amount
+                    to_account.balance += amount
+                    from_account.save()
+                    to_account.save()
+                    
+                    Transaction.objects.create(
+                        account=from_account,
+                        transaction_mode='Transfer',
+                        party_involved=to_account.customer.name,
+                        amount=amount,
+                        transaction_status='Completed'
+                    )
+                    
+                    return redirect('transaction_success')  # Redirect to a success page
+            except Account.DoesNotExist:
+                return render(request, 'error.html', {'message': 'Account not found'})
+            except ValueError as e:
+                return render(request, 'error.html', {'message': str(e)})
+            except Exception as e:
+                return render(request, 'error.html', {'message': 'An error occurred'})
+    else:
+        form = TransferForm()
+    
+    return render(request, 'transfer.html', {'form': form})

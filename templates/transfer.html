@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transfer Funds</title>
+</head>
+<body>
+    <h2>Transfer Funds</h2>
+    <p>Please enter the account numbers for the transfer:</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_from_account_number">From Account Number:</label>
+        {{ form.from_account_number }}
+        <br>
+        <label for="id_to_account_number">To Account Number:</label>
+        {{ form.to_account_number }}
+        <br>
+        <label for="id_amount">Amount:</label>
+        {{ form.amount }}
+        <br>
+        <input type="submit" value="Transfer">
+    </form>
+</body>
+</html>

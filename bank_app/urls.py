@@ -10,5 +10,7 @@ urlpatterns = [
     path('loan/<int:loan_id>/', loan_detail, name='loan_detail'),
     path('service/<int:purchase_id>/', service_purchase_detail, name='service_purchase_detail'),
     path("home/",home,name="home"),
-    path('process-transaction/', process_transaction, name='process_transaction'),
+    path('transfer/', transfer_funds, name='transfer_funds'),
+    path('success/',  transaction_success, name='transaction_success'),
+
 ]

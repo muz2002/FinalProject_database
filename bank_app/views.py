@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Customer, Account, Card, Transaction, Loan, Customerservicepurchase
 from django.db import transaction
 from . forms import TransferForm 
-
+from datetime import datetime
 
 
 def home(request):
@@ -80,7 +80,7 @@ def transfer_funds(request):
                     
                     if from_account.balance < amount:
                         raise ValueError("Insufficient funds")
-                    
+                
                     from_account.balance -= amount
                     to_account.balance += amount
                     from_account.save()
@@ -91,7 +91,9 @@ def transfer_funds(request):
                         transaction_mode='Transfer',
                         party_involved=to_account.customer.name,
                         amount=amount,
-                        transaction_status='Completed'
+                        transaction_status='Completed',
+                        transaction_date = datetime.now()
+                        
                     )
                     
                     return redirect('transaction_success')  # Redirect to a success page

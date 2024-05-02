@@ -1,13 +1,79 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Card Details</title>
-  </head>
-  <body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .card-type {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .card-number {
+            font-weight: bold;
+        }
+
+        .expiry-date,
+        .cvv {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
     <h1>Card Details</h1>
-    <p>Card Type: {{ card.card_type }}</p>
-    <p>Card Number: {{ card.card_number }}</p>
-    <p>Expiry Date: {{ card.expiry_date }}</p>
-    <p>CVV: {{ card.cvv }}</p>
-  </body>
+    {% if cards %}
+        <ul>
+            {% for card in cards %}
+                <li>
+                    <p><span class="card-type">Card Type:</span> {{ card.card_type }}</p>
+                    <p><span class="card-number">Card Number:</span> {{ card.card_number }}</p>
+                    <p><span class="expiry-date">Expiry Date:</span> {{ card.expiry_date }}</p>
+                    <p><span class="cvv">CVV:</span> {{ card.cvv }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No cards found.</p>
+    {% endif %}
+</div>
+<div class="footer">
+    <p> - Cards Details</p>
+</div>
+</body>
 </html>

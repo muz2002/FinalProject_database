@@ -8,20 +8,51 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f7f7f7;
+            color: #333;
         }
 
         h1, h2 {
-            color: #333;
+            color: #1f4f67;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 5px;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
+            margin-top: 5px;
         }
 
         li {
+            margin-bottom: 5px;
+        }
+
+        .account-item, .card-item, .loan-item, .service-item {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 10px;
-            
+        }
+
+        .account-item:hover, .card-item:hover, .loan-item:hover, .service-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .account-item strong, .card-item strong, .loan-item strong, .service-item strong {
+            color: #333;
+        }
+
+        .account-item .balance {
+            color: #854c23;
+        }
+
+        .card-item .card-number {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -33,28 +64,40 @@
     <h2>Accounts</h2>
     <ul>
         {% for account in accounts %}
-        <li>Account Number: {{ account.account_number }}, Balance: ${{ account.balance }}</li>
+        <li class="account-item">
+            <strong>Account Number:</strong> {{ account.account_number }},
+            <span class="balance">Balance: ${{ account.balance }}</span>
+        </li>
         {% endfor %}
     </ul>
 
     <h2>Cards</h2>
     <ul>
         {% for card in cards %}
-        <li>Card Type: {{ card.card_type }}, Card Number: {{ card.card_number }}</li>
+        <li class="card-item">
+            <strong>Card Type:</strong> {{ card.card_type }},
+            <span class="card-number">Card Number: {{ card.card_number }}</span>
+        </li>
         {% endfor %}
     </ul>
 
     <h2>Loans</h2>
     <ul>
         {% for loan in loans %}
-        <li>Loan Type: {{ loan.loan_type }}, Amount: ${{ loan.amount }}</li>
+        <li class="loan-item">
+            <strong>Loan Type:</strong> {{ loan.loan_type }},
+            <span>Amount: ${{ loan.amount }}</span>
+        </li>
         {% endfor %}
     </ul>
 
     <h2>Services</h2>
     <ul>
         {% for service in services %}
-        <li>Service Type: {{ service.service_type }}, Purchase Date: {{ service.purchase_date }}</li>
+        <li class="service-item">
+            <strong>Service Type:</strong> {{ service.service_type }},
+            <span>Purchase Date: {{ service.purchase_date }}</span>
+        </li>
         {% endfor %}
     </ul>
 </body>

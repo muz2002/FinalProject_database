@@ -37,7 +37,7 @@ def customer_detail(request):
 
 def account_detail(request):
     account = get_object_or_404(Account, pk=request.user.account.customer_id)
-    transactions = Transaction.objects.filter(account=account)
+    transactions = Transaction.objects.filter(account=account).order_by('-transaction_date')
     return render(
         request,
         "account_detail.html",
@@ -45,14 +45,18 @@ def account_detail(request):
     )
 
 
-def card_detail(request, card_id):
-    card = get_object_or_404(Card, pk=card_id)
-    return render(request, "card_detail.html", {"card": card})
 
 
-def transaction_detail(request, transaction_id):
-    transaction = get_object_or_404(Transaction, pk=transaction_id)
-    return render(request, "transaction_detail.html", {"transaction": transaction})
+def card_detail(request):
+    customer_id = request.user.account.customer_id
+    cards = Card.objects.filter(customer_id=customer_id)
+    customer_name = [card.customer.name if card.customer else "Unknown" for card in cards]
+    return render(request, "card_detail.html", {"cards": cards, "customer_name": customer_name})
+
+def transaction_detail(request):
+    account_id = request.user.account.customer_id
+    transactions = Transaction.objects.filter(account_id=account_id).order_by('-transaction_date')
+    return render(request, "transaction_detail.html", {"transaction": transactions})
 
 
 def loan_detail(request, loan_id):

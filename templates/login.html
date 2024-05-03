@@ -1,7 +1,14 @@
 {%load crispy_forms_tags %}
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+         body{
+            background-image: url("{% static 'back.jpeg' %}");
+            background-size: cover;
+        }
+    </style>
     <link rel="stylesheet" href="https://bootswatch.com/5/united/bootstrap.min.css">
     <title>User Login</title>
 </head>

@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 
@@ -31,3 +32,13 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})
+
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("home")  # Redirect to the login page after logout
+    elif request.method == "GET":
+        # You can handle GET requests here, maybe show a confirmation page
+        return render(request, "logout.html")
+    else:
+        return HttpResponseNotAllowed(["GET", "POST"])

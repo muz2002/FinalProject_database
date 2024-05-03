@@ -7,6 +7,7 @@ from .models import Customer, Account, Card, Transaction, Loan, Customerservicep
 from django.db import transaction
 from . forms import TransferForm 
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -14,7 +15,7 @@ def home(request):
 
 def transaction_success(request):
     return render(request, 'transaction_success.html')
-
+@login_required
 def customer_detail(request):
 
     customer = get_object_or_404(Customer, pk=request.user.account.customer_id)

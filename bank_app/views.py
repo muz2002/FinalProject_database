@@ -70,9 +70,11 @@ def service_purchase_detail(request, purchase_id):
     return render(
         request, "service_purchase_detail.html", {"service_purchase": service_purchase}
     )
+@login_required
+@transaction.atomic
 def transfer_funds(request):
     if request.method == 'POST':
-        form = TransferForm(request.POST)
+        form = TransferForm(request.POST, request = request)
         if form.is_valid():
             from_account_number = form.cleaned_data['from_account_number']
             to_account_number = form.cleaned_data['to_account_number']
@@ -101,7 +103,7 @@ def transfer_funds(request):
                         
                     )
                     
-                    return redirect('transaction_success')  # Redirect to a success page
+                    return redirect('transaction_success')  
             except Account.DoesNotExist:
                 return render(request, 'error.html', {'message': 'Account not found'})
             except ValueError as e:
@@ -109,6 +111,6 @@ def transfer_funds(request):
             except Exception as e:
                 return render(request, 'error.html', {'message': 'An error occurred'})
     else:
-        form = TransferForm()
+        form = TransferForm(request = request)
     
     return render(request, 'transfer.html', {'form': form})

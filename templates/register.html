@@ -1,4 +1,4 @@
-<!-- register.html -->
+{%load static%}
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
@@ -7,6 +7,12 @@
     <title>User Registration</title>
 </head>
 <body>
+    <style>
+        body{
+            background-image: url("{% static 'back.jpeg' %}");
+            background-size: cover;
+        }
+    </style>
 <div class="container" style="width: 500px;"> 
     <h1>User Registration</h1>
     <form method="post">

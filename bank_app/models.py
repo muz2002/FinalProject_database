@@ -24,9 +24,7 @@ class Account(models.Model):
         else:
             return f"Account {self.account_id}"
 
-    class Meta:
-        managed = False
-        db_table = "account"
+   
 
 
 class Card(models.Model):
@@ -60,9 +58,7 @@ class Card(models.Model):
         else:
             return f"Card id is {self.card_id}"
 
-    class Meta:
-        managed = False
-        db_table = "card"
+   
 
 
 class Customer(models.Model):
@@ -75,9 +71,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        managed = False
-        db_table = "customer"
+   
 
 
 class Customerservicepurchase(models.Model):
@@ -87,9 +81,7 @@ class Customerservicepurchase(models.Model):
     service_id = models.IntegerField(blank=True, null=True)
     purchase_date = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = "customerservicepurchase"
+   
 
 
 class Insurance(models.Model):
@@ -104,9 +96,7 @@ class Insurance(models.Model):
     )
     status = models.CharField(max_length=20, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = "insurance"
+   
 
 
 class Loan(models.Model):
@@ -125,9 +115,7 @@ class Loan(models.Model):
         else:
             return f"Loan_id {self.loan_id}"
 
-    class Meta:
-        managed = False
-        db_table = "loan"
+   
 
 
 class Transaction(models.Model):
@@ -145,6 +133,4 @@ class Transaction(models.Model):
         else:
             return f" Transactiond id {self.transaction_id}"
 
-    class Meta:
-        managed = False
-        db_table = "transaction"
+   

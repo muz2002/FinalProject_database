@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from django.contrib.staticfiles.urls import  staticfiles_urlpatterns
 urlpatterns = [
     
     path("customer/", customer_detail, name="customer_detail"),
@@ -13,3 +13,5 @@ urlpatterns = [
     path('transfer/', transfer_funds, name='transfer_funds'),
     path('success/',  transaction_success, name='transaction_success'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

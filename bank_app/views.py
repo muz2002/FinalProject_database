@@ -1,20 +1,24 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
 # views.py
 from django.shortcuts import render, get_object_or_404
 from .models import Customer, Account, Card, Transaction, Loan, Customerservicepurchase
 from django.db import transaction
-from . forms import TransferForm 
+from .forms import TransferForm
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 
 def home(request):
     return render(request, "home.html")
 
+
 def transaction_success(request):
-    return render(request, 'transaction_success.html')
+    return render(request, "transaction_success.html")
+
+
 @login_required
 def customer_detail(request):
 
@@ -38,7 +42,9 @@ def customer_detail(request):
 
 def account_detail(request):
     account = get_object_or_404(Account, pk=request.user.account.customer_id)
-    transactions = Transaction.objects.filter(account=account).order_by('-transaction_date')
+    transactions = Transaction.objects.filter(account=account).order_by(
+        "-transaction_date"
+    )
     return render(
         request,
         "account_detail.html",
@@ -46,71 +52,88 @@ def account_detail(request):
     )
 
 
-
-
 def card_detail(request):
     customer_id = request.user.account.customer_id
     cards = Card.objects.filter(customer_id=customer_id)
-    customer_name = [card.customer.name if card.customer else "Unknown" for card in cards]
-    return render(request, "card_detail.html", {"cards": cards, "customer_name": customer_name})
+    customer_name = [
+        card.customer.name if card.customer else "Unknown" for card in cards
+    ]
+    return render(
+        request, "card_detail.html", {"cards": cards, "customer_name": customer_name}
+    )
+
 
 def transaction_detail(request):
     account_id = request.user.account.customer_id
-    transactions = Transaction.objects.filter(account_id=account_id).order_by('-transaction_date')
+    transactions = Transaction.objects.filter(account_id=account_id).order_by(
+        "-transaction_date"
+    )
     return render(request, "transaction_detail.html", {"transaction": transactions})
 
 
-def loan_detail(request, loan_id):
-    loan = get_object_or_404(Loan, pk=loan_id)
-    return render(request, "loan_detail.html", {"loan": loan})
+def loan_detail(request):
+    try:
+        # Assuming request.user is authenticated and has an associated account
+        customer_id = request.user.account.customer_id
+        loans = Loan.objects.filter(customer_id=customer_id)
+        if loans.exists():
+            return render(request, "loan_detail.html", {"loans": loans})
+        else:
+            raise Http404("No loans found for this customer.")
+    except AttributeError:
+        raise Http404("User account not found.")
 
 
-def service_purchase_detail(request, purchase_id):
-    service_purchase = get_object_or_404(Customerservicepurchase, pk=purchase_id)
+def service_purchase_detail(request):
+    customer_id = request.user.account.customer_id
+    service_purchase = Customerservicepurchase.objects.filter(customer_id = customer_id)
     return render(
         request, "service_purchase_detail.html", {"service_purchase": service_purchase}
     )
+
+
 @login_required
 @transaction.atomic
 def transfer_funds(request):
-    if request.method == 'POST':
-        form = TransferForm(request.POST, request = request)
+    if request.method == "POST":
+        form = TransferForm(request.POST, request=request)
         if form.is_valid():
-            from_account_number = form.cleaned_data['from_account_number']
-            to_account_number = form.cleaned_data['to_account_number']
-            amount = form.cleaned_data['amount']
-            
+            from_account_number = form.cleaned_data["from_account_number"]
+            to_account_number = form.cleaned_data["to_account_number"]
+            amount = form.cleaned_data["amount"]
+
             try:
                 with transaction.atomic():
-                    from_account = Account.objects.get(account_number=from_account_number)
+                    from_account = Account.objects.get(
+                        account_number=from_account_number
+                    )
                     to_account = Account.objects.get(account_number=to_account_number)
-                    
+
                     if from_account.balance < amount:
                         raise ValueError("Insufficient funds")
-                
+
                     from_account.balance -= amount
                     to_account.balance += amount
                     from_account.save()
                     to_account.save()
-                    
+
                     Transaction.objects.create(
                         account=from_account,
-                        transaction_mode='Transfer',
+                        transaction_mode="Transfer",
                         party_involved=to_account.customer.name,
                         amount=amount,
-                        transaction_status='Completed',
-                        transaction_date = datetime.now()
-                        
+                        transaction_status="Completed",
+                        transaction_date=datetime.now(),
                     )
-                    
-                    return redirect('transaction_success')  
+
+                    return redirect("transaction_success")
             except Account.DoesNotExist:
-                return render(request, 'error.html', {'message': 'Account not found'})
+                return render(request, "error.html", {"message": "Account not found"})
             except ValueError as e:
-                return render(request, 'error.html', {'message': str(e)})
+                return render(request, "error.html", {"message": str(e)})
             except Exception as e:
-                return render(request, 'error.html', {'message': 'An error occurred'})
+                return render(request, "error.html", {"message": "An error occurred"})
     else:
-        form = TransferForm(request = request)
-    
-    return render(request, 'transfer.html', {'form': form})
+        form = TransferForm(request=request)
+
+    return render(request, "transfer.html", {"form": form})

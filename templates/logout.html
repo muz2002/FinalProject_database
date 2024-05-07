@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,14 +7,12 @@
     <title>Logout</title>
     <style>
       body {
-        
-            background-image: url("{% static 'log_out.webp' %}");
-            background-size: cover;
-        
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
+        background-color: rgba(
+          173,
+          216,
+          230,
+          0.5
+        ); /* Light blue background color with transparency */
       }
       .container {
         max-width: 600px;
@@ -32,7 +30,12 @@
         margin-bottom: 20px;
       }
       button {
-        background-color: #ff5722;
+        background-color: rgba(
+          255,
+          87,
+          34,
+          0.6
+        ); /* Transparent logout button color */
         color: #fff;
         border: none;
         padding: 10px 20px;
@@ -40,7 +43,12 @@
         cursor: pointer;
       }
       button:hover {
-        background-color: #ff7043;
+        background-color: rgba(
+          255,
+          112,
+          67,
+          0.6
+        ); /* Transparent logout button color on hover */
       }
     </style>
   </head>

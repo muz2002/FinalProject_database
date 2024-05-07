@@ -1,9 +1,70 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Service Purchase Details</title>
+    <style>
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-image: url("{% static 'back.jpeg' %}");
+        background-size: cover;
 
-{% block title %}Service Purchase Details{% endblock %}
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
 
-{% block content %}
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      li:hover {
+        background-color: #f0f0f0;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+
+      .no-purchases {
+        text-align: center;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
     <h1>Service Purchase Details</h1>
-    <p>Service Type: {{ service_purchase.service_type }}</p>
-    <p>Purchase Date: {{ service_purchase.purchase_date}}</p>
-{% endblock %}
+    {% if service_purchase %}
+    <ul>
+      {% for purchase in service_purchase %}
+      <li>
+        <p><strong>Service Type:</strong> {{ purchase.service_type }}</p>
+        <p><strong>Purchase Date:</strong> {{ purchase.purchase_date }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-purchases">No service purchases found.</p>
+    {% endif %}
+  </body>
+</html>

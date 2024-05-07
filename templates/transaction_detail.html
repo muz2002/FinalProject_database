@@ -1,69 +1,79 @@
 {%load static%}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Transaction Details</title>
     <style>
-        body {
-            
-            background-image: url("{% static 'back.jpeg' %}");
-            background-size: cover;
-        
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-image: url("{% static 'back.jpeg' %}");
+        background-size: cover;
 
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-top: 20px;
-        }
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+      }
 
-        li {
-            background-color: #fff;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
 
-        li:hover {
-            background-color: #f0f0f0;
-        }
+      li {
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        p {
-            margin: 5px 0;
-        }
+      li:hover {
+        background-color: #f0f0f0;
+      }
 
-        .no-transactions {
-            text-align: center;
-            color: #888;
-        }
+      p {
+        margin: 5px 0;
+      }
+
+      .no-transactions {
+        text-align: center;
+        color: #888;
+      }
     </style>
-</head>
-<body>
-<h1>Transaction Details</h1>
-{% if transaction %}
+  </head>
+  <body>
+    <h1>Transaction Details</h1>
+    {% if transaction %}
     <ul>
-        {% for transaction in transaction %}
-            <li>
-                <p><strong>Transaction Mode:</strong> {{ transaction.transaction_mode }}</p>
-                <p><strong>Party Involved:</strong> {{ transaction.party_involved }}</p>
-                <p><strong>Amount:</strong> {{ transaction.amount }}</p>
-                <p><strong>Transaction Status:</strong> {{ transaction.transaction_status }}</p>
-                <p><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</p>
-            </li>
-        {% endfor %}
+      {% for transaction in transaction %}
+      <li>
+        <p>
+          <strong>Transaction Mode:</strong> {{ transaction.transaction_mode }}
+        </p>
+        <p><strong>Party Involved:</strong> {{ transaction.party_involved }}</p>
+        <p><strong>Amount:</strong> {{ transaction.amount }}</p>
+        <p>
+          <strong>Transaction Status:</strong> {{ transaction.transaction_status}}
+        </p>
+        <p>
+          <strong>Transaction Date:</strong> {{ transaction.transaction_date }}
+        </p>
+      </li>
+      {% endfor %}
     </ul>
-{% else %}
+    {% else %}
     <p class="no-transactions">No transactions found.</p>
-{% endif %}
-</body>
+    {% endif %}
+  </body>
 </html>

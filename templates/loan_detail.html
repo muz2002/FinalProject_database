@@ -1,13 +1,66 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Loan Details</title>
-  </head>
-  <body>
-    <h1>Loan Details</h1>
-    <p>Loan Type: {{ loan.loan_type }}</p>
-    <p>Amount: {{ loan.amount }}</p>
-    <p>Interest Rate: {{ loan.interest_rate }}</p>
-    <p>Status: {{ loan.status }}</p>
-  </body>
+    <style>
+       html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-image: url("{% static 'back.jpeg' %}");
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      p {
+        margin: 5px 0;
+        color: #333;
+        text-align: center;
+      }
+
+      .loan-info {
+        background-color: #fff;
+        margin: 20px auto;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 50%;
+      }
+
+      .no-loan {
+        text-align: center;
+        color: #888;
+      }
+    </style>
+        
+    </style>
+</head>
+<body>
+<h1>Loan Details</h1>
+{% if loans %}
+    {% for loan in loans %}
+    <div class="loan-info">
+        <p><strong>Loan Type:</strong> {{ loan.loan_type }}</p>
+        <p><strong>Amount:</strong> {{ loan.amount }}</p>
+        <p><strong>Interest Rate:</strong> {{ loan.interest_rate }}</p>
+        <p><strong>Status:</strong> {{ loan.status }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="no-loan">No loan details found.</p>
+{% endif %}
+</body>
 </html>

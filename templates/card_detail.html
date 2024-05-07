@@ -1,84 +1,95 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Card Details</title>
     <style>
-        body {
-            
-            background-image: url("{% static 'back.jpeg' %}");
-            background-size: cover;
-        
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            line-height: 1.6;
-        }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+      body {
+        background-image: url("{% static 'back.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #333;
-        }
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        line-height: 1.6;
+      }
 
-        p {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        .card-type {
-            font-weight: bold;
-            color: #007bff;
-        }
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-        .card-number {
-            font-weight: bold;
-        }
+      p {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
 
-        .expiry-date,
-        .cvv {
-            font-weight: bold;
-            color: #28a745;
-        }
+      .card-type {
+        font-weight: bold;
+        color: #007bff;
+      }
 
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #120101;
-        }
+      .card-number {
+        font-weight: bold;
+      }
+
+      .expiry-date,
+      .cvv {
+        font-weight: bold;
+        color: #28a745;
+      }
+
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #120101;
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <h1>Card Details</h1>
-    {% if cards %}
-        <ul>
-            {% for card in cards %}
-                <li>
-                    <p><span class="card-type">Card Type:</span> {{ card.card_type }}</p>
-                    <p><span class="card-number">Card Number:</span> {{ card.card_number }}</p>
-                    <p><span class="expiry-date">Expiry Date:</span> {{ card.expiry_date }}</p>
-                    <p><span class="cvv">CVV:</span> {{ card.cvv }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No cards found.</p>
-    {% endif %}
-</div>
-<div class="footer">
-    <p> - Cards Details</p>
-</div>
-</body>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Card Details</h1>
+      {% if cards %}
+      <ul>
+        {% for card in cards %}
+        <li>
+          <p><span class="card-type">Card Type:</span> {{ card.card_type }}</p>
+          <p>
+            <span class="card-number">Card Number:</span> {{ card.card_number }}
+          </p>
+          <p>
+            <span class="expiry-date">Expiry Date:</span> {{ card.expiry_date }}
+          </p>
+          <p><span class="cvv">CVV:</span> {{ card.cvv }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No cards found.</p>
+      {% endif %}
+    </div>
+    <div class="footer">
+      <p>- Cards Details</p>
+    </div>
+  </body>
 </html>

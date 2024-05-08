@@ -9,7 +9,7 @@ urlpatterns = [
     path('transaction/', transaction_detail, name='transaction_detail'),
     path('loan/', loan_detail, name='loan_detail'),
     path('service/', service_purchase_detail, name='service_purchase_detail'),
-    path("home/",home,name="home"),
+    path("",home,name="home"),
     path('transfer/', transfer_funds, name='transfer_funds'),
     path('success/',  transaction_success, name='transaction_success'),
 ]

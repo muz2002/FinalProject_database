@@ -8,7 +8,6 @@ from django.db import transaction
 from .forms import TransferForm
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
 
 
 def home(request):
@@ -72,17 +71,11 @@ def transaction_detail(request):
 
 
 def loan_detail(request):
-    try:
-        # Assuming request.user is authenticated and has an associated account
+    
         customer_id = request.user.account.customer_id
         loans = Loan.objects.filter(customer_id=customer_id)
-        if loans.exists():
-            return render(request, "loan_detail.html", {"loans": loans})
-        else:
-            raise Http404("No loans found for this customer.")
-    except AttributeError:
-        raise Http404("User account not found.")
-
+        return render(request, "loan_detail.html", {"loans": loans})
+       
 
 def service_purchase_detail(request):
     customer_id = request.user.account.customer_id

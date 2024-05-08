@@ -1,98 +1,96 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Transfer Funds</title>
     <style>
-              html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-         body {
-            
-            background-image: url("{% static 'back.jpeg' %}");
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 15px;
-            padding: 20px;
-            background-repeat: no-repeat;
-        }
-        h2 {
-            color: #333;
-        }
-        form {
-            max-width: 400px;
-            margin: auto;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="number"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #b778199d;
-            color: #fff;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        /* Your existing CSS styles */
+      h2 {
+        color: #333;
+      }
+      form {
+        max-width: 400px;
+        margin: auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="number"],
+      input[type="submit"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background-color: #b778199d;
+        color: #fff;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+      /* Your existing CSS styles */
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Transfer Funds</h2>
     <p>Please enter the account numbers for the transfer:</p>
     <form id="transferForm" method="post">
-        {% csrf_token %}
-        <label for="id_from_account_number">From Account Number:</label>
-        {{ form.from_account_number }}
-        <br>
-        <label for="id_to_account_number">To Account Number:</label>
-        {{ form.to_account_number }}
-        <br>
-        <label for="id_amount">Amount:</label>
-        <input type="number" name="amount" id="id_amount" min="0.01" step="0.01" required>
-        <br>
-        <input type="submit" value="Transfer">
+      {% csrf_token %}
+      <label for="id_from_account_number">From Account Number:</label>
+      {{ form.from_account_number }}
+      <br />
+      <label for="id_to_account_number">To Account Number:</label>
+      {{ form.to_account_number }}
+      <br />
+      <label for="id_amount">Amount:</label>
+      <input
+        type="number"
+        name="amount"
+        id="id_amount"
+        min="0.01"
+        step="0.01"
+        required
+      />
+      <br />
+      <input type="submit" value="Transfer" />
     </form>
 
     <script>
-        document.getElementById('transferForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+      document
+        .getElementById("transferForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting normally
 
-            // Get form data
-            var fromAccountNumber = document.getElementById('id_from_account_number').value;
-            var toAccountNumber = document.getElementById('id_to_account_number').value;
-            var amount = parseFloat(document.getElementById('id_amount').value);
+          // Get form data
+          var fromAccountNumber = document.getElementById(
+            "id_from_account_number"
+          ).value;
+          var toAccountNumber = document.getElementById(
+            "id_to_account_number"
+          ).value;
+          var amount = parseFloat(document.getElementById("id_amount").value);
 
-            // Perform client-side validation
-            if (fromAccountNumber === toAccountNumber) {
-                alert("Cannot transfer funds to your own account.");
-                return;
-            }
-            if (amount <= 0 || isNaN(amount)) {
-                alert("Please enter a valid amount.");
-                return;
-            }
+          // Perform client-side validation
+          if (fromAccountNumber === toAccountNumber) {
+            alert("Cannot transfer funds to your own account.");
+            return;
+          }
+          if (amount <= 0 || isNaN(amount)) {
+            alert("Please enter a valid amount.");
+            return;
+          }
 
-            // If all validations pass, submit the form
-            this.submit();
+          // If all validations pass, submit the form
+          this.submit();
         });
     </script>
-</body>
+  </body>
 </html>

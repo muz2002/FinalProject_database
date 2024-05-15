@@ -59,6 +59,70 @@ python manage.py runserver
 
 The database schema for this application is defined in the table_relations.sql file. It includes tables for accounts, transactions, loans, customers, administrators, and other relevant entities.
 
+## Project Structure
+
+```bash
+.
+├── README.md
+├── bank_app
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── bank_management
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── manage.py
+├── requirements.txt
+├── static
+│   ├── account_styles.css
+│   ├── assets
+│   ├── back.jpeg
+│   └── log_out.webp
+├── staticfiles
+│   ├── account_styles.css
+│   ├── admin
+│   ├── assets
+│   ├── back.jpeg
+│   └── log_out.webp
+├── table_relations.sql
+├── templates
+│   ├── account_detail.html
+│   ├── card_detail.html
+│   ├── customer_detail.html
+│   ├── error.html
+│   ├── home.html
+│   ├── loan_detail.html
+│   ├── login.html
+│   ├── logout.html
+│   ├── register.html
+│   ├── service_purchase_detail.html
+│   ├── transaction_detail.html
+│   ├── transaction_success.html
+│   └── transfer.html
+└── user_authentication
+    ├── __init__.py
+    ├── __pycache__
+    ├── admin.py
+    ├── apps.py
+    ├── forms.py
+    ├── migrations
+    ├── models.py
+    ├── tests.py
+    ├── urls.py
+    └── views.py
+```
+
 ## Deployment
 
 The <b>cloud_database</b> which is my main branch of this project is deployed on Render, and you can access it [here](https://banking-system-7g5i.onrender.com) .

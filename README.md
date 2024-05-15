@@ -61,9 +61,9 @@ The database schema for this application is defined in the table_relations.sql f
 
 ## Deployment
 
-The main branch of this project is deployed on Render, and you can access it [here](https://banking-system-7g5i.onrender.com) .
+The <b>cloud_database</b> which is my main branch of this project is deployed on Render, and you can access it [here](https://banking-system-7g5i.onrender.com) .
 
-To see how the project works locally, switch to development:
+To see how the project works locally, switch to <b>development</b>:
 
 ```bash
 git checkout development

@@ -2,6 +2,18 @@
 
 This project is the final submission for the Database Course. It is a banking system application developed using SQL for the database schema and Django for the backend application with templates.
 
+# Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+
+- [Usage](#usage)
+- [Database Schema](#database-schema)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Technologies Used](#technologies-used)
+
 ## Introduction
 
 The Banking System Application is designed to simulate basic banking operations such as managing accounts, transactions, loans, and customer information. It provides a user-friendly interface for both customers and administrators to interact with the system.

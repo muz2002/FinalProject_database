@@ -6,6 +6,7 @@ This project is the final submission for the Database Course. It is a banking sy
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
 - [Installation](#installation)
 
 - [Usage](#usage)
@@ -25,6 +26,10 @@ The Banking System Application is designed to simulate basic banking operations 
 - Transaction processing (deposit, withdrawal, transfer) with atomic transaction logic
 - Loan management (apply for loans, view loan status)
 - Customer information management (update personal details)
+
+## Entity Relationship Diagram
+
+![Alt text](banking_system_db.png)
 
 ## Installation
 
